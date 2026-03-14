@@ -116,7 +116,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
       <button class="pb" onclick="doMemberStart()">QRコードを表示する</button>
     </div>
     <div class="card card-d">
-      <div class="ct ct-g">上司の方</div>
+      <div class="ct ct-g">応援者の方</div>
       <div class="cd cd-g">パスポートを開いてスタンプを集める</div>
       <button class="bb" onclick="doBossStart()">OPEN MY PASSPORT</button>
     </div>
@@ -137,7 +137,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
     </div>
     <div class="qrb">
       <div id="m-qr"></div>
-      <p>このQRコードを上司に見せてください<br>SHOW THIS TO YOUR SUPERVISOR</p>
+      <p>このQRコードを応援者に見せてください<br>SHOW THIS TO YOUR SUPPORTER</p>
     </div>
     <button class="gb" onclick="goBack()">← 戻る</button>
   </div>
@@ -149,7 +149,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
     <div class="pbar">
       <div>
         <div class="pbl">PASSPORT HOLDER</div>
-        <div class="pbn">上司</div>
+        <div class="pbn">応援者</div>
       </div>
       <div class="pbr">
         <div class="pbl">COLLECTED</div>
@@ -222,9 +222,7 @@ const MEMBERS = [
 ];
 
 const KEY = 'mdtpj_stamps';
-// ★ GitHub PagesのURLに変更してください（末尾スラッシュなし）
-// 例: 'https://yourname.github.io/stamp-rally'
-const BASE_URL = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+const BASE_URL = 'https://ogawa16-maker.github.io/mech.Design/';
 let stamps = {};
 let qrSc = null;
 
@@ -345,7 +343,7 @@ function stopQR(){ if(qrSc){ qrSc.stop().catch(()=>{}); qrSc=null; } }
 function demoStamp(){
   const v=document.getElementById('demo-sel').value;
   if(!v){ alert('メンバーを選択してください'); return; }
-  stopQR(); processStamp('mdtpj:'+v);
+  stopQR(); processStamp(BASE_URL+'?m='+encodeURIComponent(v));
 }
 
 function processStamp(text){
