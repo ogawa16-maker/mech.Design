@@ -8,9 +8,9 @@
 <style>
 :root{--navy:#1c2b4a;--gold:#c8a84b;--cream:#f4efe4;--red:#8b2030;--muted:rgba(28,43,74,.45);}
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{min-height:100%;background:#0e1625;}
-body{font-family:'Noto Sans JP',sans-serif;display:flex;justify-content:center;}
-.app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);position:relative;overflow-x:hidden;}
+html,body{background:#0e1625;min-height:100%;}
+body{font-family:'Noto Sans JP',sans-serif;}
+.app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);position:relative;overflow-x:hidden;margin:0 auto;}
 .app::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(160,140,100,.06) 28px);pointer-events:none;z-index:0;}
 .hdr{background:var(--navy);padding:20px 20px 16px;position:relative;overflow:hidden;z-index:1;}
 .hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(200,168,75,.05) 6px,rgba(200,168,75,.05) 12px);}
@@ -222,6 +222,9 @@ const MEMBERS = [
 ];
 
 const KEY = 'mdtpj_stamps';
+// ★ GitHub PagesのURLに変更してください（末尾スラッシュなし）
+// 例: 'https://yourname.github.io/stamp-rally'
+const BASE_URL = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
 let stamps = {};
 let qrSc = null;
 
@@ -296,7 +299,7 @@ function showMemberQR(name){
 
   const qc=document.getElementById('m-qr');
   qc.innerHTML='';
-  new QRCode(qc,{ text:'mdtpj:'+name, width:200, height:200, colorDark:'#1c2b4a', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.H });
+  new QRCode(qc,{ text: BASE_URL + '?m=' + encodeURIComponent(name), width:200, height:200, colorDark:'#1c2b4a', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.H });
   show('s-member');
 }
 
@@ -347,7 +350,15 @@ function demoStamp(){
 
 function processStamp(text){
   stopQR();
-  const name=text.startsWith('mdtpj:') ? text.slice(6) : text;
+  // URLパラメータ形式 (?m=名前) または旧形式 (mdtpj:名前) 両対応
+  let name = text;
+  try {
+    const url = new URL(text);
+    const m = url.searchParams.get('m');
+    if(m) name = m;
+  } catch(e) {
+    if(text.startsWith('mdtpj:')) name = text.slice(6);
+  }
   const member=MEMBERS.find(m=>m.name===name);
   if(!member){ alert('このQRは認識できません'); showPassport(); return; }
   if(stamps[name]){ alert(name+' さんのスタンプはすでに取得済みです！'); showPassport(); return; }
@@ -371,6 +382,13 @@ function closeScanner(){ stopQR(); showPassport(); }
 function goBack(){ stopQR(); show('s-start'); }
 
 initStart();
+
+// カメラでQRを読んでURLで開いた場合、自動でメンバー画面を表示
+const urlParams = new URLSearchParams(window.location.search);
+const autoMember = urlParams.get('m');
+if(autoMember && MEMBERS.find(m=>m.name===autoMember)){
+  showMemberQR(autoMember);
+}
 </script>
 </body>
 </html>
