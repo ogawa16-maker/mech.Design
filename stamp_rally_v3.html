@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mech. Design Thinking PJ 2025-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1c2b4a;--gold:#c8a84b;--cream:#f4efe4;--red:#8b2030;--muted:rgba(28,43,74,.45);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;background:#0e1625;}
+body{font-family:'Noto Sans JP',sans-serif;display:flex;justify-content:center;}
+.app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);position:relative;overflow:hidden;}
+.app::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(160,140,100,.06) 28px);pointer-events:none;z-index:0;}
+.hdr{background:var(--navy);padding:20px 20px 16px;position:relative;overflow:hidden;z-index:1;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(200,168,75,.05) 6px,rgba(200,168,75,.05) 12px);}
+.hdr-inner{position:relative;z-index:1;display:flex;align-items:center;gap:12px;}
+.hdr-emblem{width:40px;height:40px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.hdr-main{font-family:'Playfair Display',serif;color:var(--gold);font-size:15px;letter-spacing:1.5px;}
+.hdr-sub{color:rgba(200,168,75,.5);font-size:9px;letter-spacing:2px;margin-top:2px;}
+.gold-rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-top:12px;}
+.screen{display:none;position:relative;z-index:1;}
+.screen.active{display:block;}
+
+/* START */
+.pad{padding:22px 20px 20px;}
+.card{border-radius:10px;padding:18px 16px;margin-bottom:14px;}
+.card-w{background:white;border:1px solid rgba(28,43,74,.12);}
+.card-d{background:var(--navy);}
+.ct{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:3px;}
+.ct-n{color:var(--navy);}
+.ct-g{color:var(--gold);}
+.cd{font-size:11px;margin-bottom:14px;letter-spacing:.5px;}
+.cd-n{color:var(--muted);}
+.cd-g{color:rgba(200,168,75,.5);}
+.fl{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:7px;}
+select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgba(28,43,74,.2);background:transparent;font-family:'Noto Serif JP',serif;font-size:16px;color:var(--navy);outline:none;margin-bottom:14px;cursor:pointer;appearance:auto;}
+.pb{width:100%;padding:13px;background:var(--navy);color:var(--gold);border:none;font-family:'Playfair Display',serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
+.pb:hover{opacity:.87;}
+.bb{width:100%;padding:13px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);font-family:'Playfair Display',serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
+.bb:hover{background:rgba(200,168,75,.1);}
+.gb{width:100%;padding:10px;background:transparent;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:4px;}
+
+/* MEMBER */
+.mw{padding:22px 20px;}
+.idc{background:var(--navy);border-radius:8px;padding:14px 16px;margin-bottom:18px;display:flex;align-items:center;gap:14px;}
+.idav{width:46px;height:46px;border:1.5px solid var(--gold);border-radius:50%;overflow:hidden;flex-shrink:0;background:rgba(200,168,75,.15);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.idav img{width:100%;height:100%;object-fit:cover;}
+.idl{font-size:9px;letter-spacing:2px;color:rgba(200,168,75,.5);}
+.idn{font-family:'Playfair Display',serif;color:var(--gold);font-size:18px;margin-top:1px;}
+.idr{font-size:10px;color:rgba(200,168,75,.4);margin-top:2px;}
+.qrb{background:white;border:1px solid rgba(28,43,74,.1);border-radius:10px;padding:22px;text-align:center;margin-bottom:14px;}
+.qrb p{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6;}
+
+/* PASSPORT */
+.pw{padding:16px 16px;}
+.pbar{background:var(--navy);border-radius:8px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.pbl-label{font-size:9px;letter-spacing:2px;color:rgba(200,168,75,.5);}
+.pbl-name{font-family:'Playfair Display',serif;color:var(--gold);font-size:18px;margin-top:1px;}
+.pbr{text-align:right;}
+.pbc{font-family:'Playfair Display',serif;color:var(--gold);font-size:22px;}
+.pbof{font-size:10px;color:rgba(200,168,75,.5);}
+.prg{height:2px;background:rgba(28,43,74,.1);border-radius:1px;margin-bottom:14px;overflow:hidden;}
+.prf{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold));transition:width .5s;}
+.stit{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;text-align:center;margin-bottom:10px;}
+.sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:14px;}
+.ss{background:white;border:1px dashed rgba(28,43,74,.18);border-radius:8px;padding:10px 8px 8px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;min-height:106px;justify-content:center;}
+.ss.got{border:1px solid rgba(28,43,74,.1);}
+.siw{width:60px;height:60px;border-radius:6px;overflow:hidden;filter:grayscale(1) opacity(.1);transition:filter .4s;}
+.ss.got .siw{filter:none;}
+.siw img{width:100%;height:100%;object-fit:cover;}
+.sn{font-size:11px;color:var(--navy);margin-top:7px;opacity:.4;text-align:center;}
+.ss.got .sn{opacity:.85;font-weight:500;}
+.sm{position:absolute;top:5px;right:5px;width:28px;height:28px;border:2px solid rgba(139,32,48,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(-18deg);opacity:0;transition:opacity .3s;}
+.ss.got .sm{opacity:1;}
+.sm span{font-size:5px;color:rgba(139,32,48,.6);font-weight:700;text-align:center;line-height:1.2;}
+.scbtn{width:100%;padding:13px;background:transparent;border:1.5px solid var(--navy);color:var(--navy);font-size:14px;letter-spacing:1px;cursor:pointer;border-radius:4px;margin-bottom:8px;}
+.scbtn:hover{background:var(--navy);color:var(--gold);}
+
+/* SCANNER */
+.scw{padding:16px 16px;}
+.sbox{border:1.5px solid rgba(28,43,74,.15);border-radius:10px;overflow:hidden;margin-bottom:12px;background:white;}
+.sbar{background:var(--navy);padding:10px 14px;font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
+.da{padding:12px 14px 14px;}
+.dl{font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:6px;}
+.ds{width:100%;padding:10px 12px;border:none;border-bottom:1.5px solid rgba(28,43,74,.2);background:transparent;font-size:14px;color:var(--navy);outline:none;margin-bottom:10px;cursor:pointer;appearance:auto;}
+.sab{width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:4px;font-size:14px;letter-spacing:1px;cursor:pointer;}
+
+/* SUCCESS */
+.sucw{padding:40px 24px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.sucf{position:relative;width:128px;height:128px;margin:0 auto 22px;}
+.sucf img{width:100%;height:100%;object-fit:cover;border-radius:8px;}
+.r1,.r2{position:absolute;border:2.5px solid rgba(139,32,48,.35);border-radius:50%;transform:rotate(-14deg);animation:ri .5s ease both;}
+.r1{inset:-10px;}
+.r2{inset:-17px;border-width:1.5px;border-color:rgba(139,32,48,.18);animation-delay:.08s;}
+@keyframes ri{from{opacity:0;transform:rotate(-14deg) scale(1.45);}to{opacity:1;transform:rotate(-14deg) scale(1);}}
+.suct{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:6px;}
+.sucs{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:26px;white-space:pre-line;}
+.cbox{background:var(--navy);color:var(--gold);padding:14px 20px;border-radius:6px;margin-bottom:20px;width:100%;}
+.cboxt{font-family:'Playfair Display',serif;font-size:16px;margin-bottom:2px;}
+.cboxs{font-size:10px;opacity:.55;letter-spacing:1.5px;}
+
+.mrz{padding:10px 16px;border-top:1px solid rgba(28,43,74,.08);font-family:'Courier New',monospace;font-size:8.5px;color:rgba(28,43,74,.18);letter-spacing:.8px;line-height:1.7;word-break:break-all;position:relative;z-index:1;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-emblem">⚙️</div>
+    <div>
+      <div class="hdr-main">Mech. Design Thinking PJ</div>
+      <div class="hdr-sub">STAMP PASSPORT · 2025–2026</div>
+    </div>
+  </div>
+  <div class="gold-rule"></div>
+</div>
+
+<!-- ① START -->
+<div class="screen active" id="s-start">
+  <div class="pad">
+    <div class="card card-w">
+      <div class="ct ct-n">メンバーの方</div>
+      <div class="cd cd-n">名前を選んでQRを表示してください</div>
+      <div class="fl">氏名を選択</div>
+      <select class="ns" id="member-sel"></select>
+      <button class="pb" onclick="doMemberStart()">QRコードを表示する</button>
+    </div>
+    <div class="card card-d">
+      <div class="ct ct-g">上司の方</div>
+      <div class="cd cd-g">パスポートを開いてスタンプを集める</div>
+      <button class="bb" onclick="doBossStart()">OPEN MY PASSPORT</button>
+    </div>
+  </div>
+  <div class="mrz">P&lt;JPN&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>MECH&lt;DESIGN&lt;THINKING&lt;PJ&lt;2025&lt;2026&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+</div>
+
+<!-- ② MEMBER QR -->
+<div class="screen" id="s-member">
+  <div class="mw">
+    <div class="idc">
+      <div class="idav" id="m-avatar">🧑‍💼</div>
+      <div>
+        <div class="idl">MEMBER ID</div>
+        <div class="idn" id="m-name">—</div>
+        <div class="idr">Mech. Design Thinking PJ</div>
+      </div>
+    </div>
+    <div class="qrb">
+      <div id="m-qr"></div>
+      <p>このQRコードを上司に見せてください<br>SHOW THIS TO YOUR SUPERVISOR</p>
+    </div>
+    <button class="gb" onclick="goBack()">← 戻る</button>
+  </div>
+</div>
+
+<!-- ③ BOSS PASSPORT -->
+<div class="screen" id="s-passport">
+  <div class="pw">
+    <div class="pbar">
+      <div>
+        <div class="pbl-label">PASSPORT HOLDER</div>
+        <div class="pbl-name">上司</div>
+      </div>
+      <div class="pbr">
+        <div class="pbl-label">COLLECTED</div>
+        <div class="pbc"><span id="got-n">0</span><span class="pbof"> / <span id="tot-n">10</span></span></div>
+      </div>
+    </div>
+    <div class="prg"><div class="prf" id="prf" style="width:0%"></div></div>
+    <div class="stit">▸ MEMBER STAMPS ◂</div>
+    <div class="sgrid" id="sgrid"></div>
+    <button class="scbtn" onclick="showScanner()">📷 QRコードをスキャン</button>
+    <button class="gb" onclick="goBack()">← 戻る</button>
+  </div>
+</div>
+
+<!-- ④ SCANNER -->
+<div class="screen" id="s-scanner">
+  <div class="scw">
+    <div class="pbar" style="margin-bottom:14px;">
+      <div>
+        <div class="pbl-label">SCANNING NOW</div>
+        <div class="pbl-name" style="font-size:15px;">メンバーのQRをスキャン</div>
+      </div>
+      <div style="color:var(--gold);font-size:22px;">📷</div>
+    </div>
+    <div class="sbox">
+      <div class="sbar">▶ SCAN MEMBER QR CODE</div>
+      <div id="reader-el"></div>
+      <div class="da">
+        <div class="dl">デモ用：メンバーを選択して押す</div>
+        <select class="ds" id="demo-sel"></select>
+        <button class="sab" onclick="demoStamp()">スタンプを押す</button>
+      </div>
+    </div>
+    <button class="gb" onclick="closeScanner()">← キャンセル</button>
+  </div>
+</div>
+
+<!-- ⑤ SUCCESS -->
+<div class="screen" id="s-success">
+  <div class="sucw">
+    <div class="sucf">
+      <img id="suc-img" src="" alt=""/>
+      <div class="r1"></div>
+      <div class="r2"></div>
+    </div>
+    <div class="suct" id="suc-title">スタンプ取得！</div>
+    <div class="sucs" id="suc-sub">—</div>
+    <div class="cbox" id="cbox" style="display:none">
+      <div class="cboxt">PASSPORT COMPLETE</div>
+      <div class="cboxs">全メンバーとコミュニケーション達成！</div>
+    </div>
+    <button class="pb" onclick="showPassport()">PASSPORT を確認する</button>
+  </div>
+</div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script>
+const MEMBERS = [
+  { name:"大谷", img:"https://api.dicebear.com/7.x/bottts/svg?seed=otani&backgroundColor=b6e3f4" },
+  { name:"吉村", img:"https://api.dicebear.com/7.x/bottts/svg?seed=yoshimura&backgroundColor=ffd6e0" },
+  { name:"藤森", img:"https://api.dicebear.com/7.x/bottts/svg?seed=fujimori&backgroundColor=d1f4e0" },
+  { name:"角谷", img:"https://api.dicebear.com/7.x/bottts/svg?seed=kadoya&backgroundColor=ffdfbf" },
+  { name:"赤松", img:"https://api.dicebear.com/7.x/bottts/svg?seed=akamatsu&backgroundColor=e8d5f5" },
+  { name:"岡崎", img:"https://api.dicebear.com/7.x/bottts/svg?seed=okazaki&backgroundColor=fde68a" },
+  { name:"立花", img:"https://api.dicebear.com/7.x/bottts/svg?seed=tachibana&backgroundColor=c7f2fa" },
+  { name:"諸星", img:"https://api.dicebear.com/7.x/bottts/svg?seed=moroboshi&backgroundColor=f5d0fe" },
+  { name:"滝沢", img:"https://api.dicebear.com/7.x/bottts/svg?seed=takizawa&backgroundColor=d9f99d" },
+  { name:"小林", img:"https://api.dicebear.com/7.x/bottts/svg?seed=kobayashi&backgroundColor=fed7aa" },
+];
+const KEY = 'mdtpj_stamps';
+let stamps = {};
+let qrSc = null;
+
+function loadSt(){ try{ stamps=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ stamps={}; } }
+function saveSt(){ try{ localStorage.setItem(KEY,JSON.stringify(stamps)); }catch(e){} }
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+function initStart(){
+  const sel=document.getElementById('member-sel');
+  sel.innerHTML='<option value="">-- 選択してください --</option>';
+  MEMBERS.forEach(m=>{ const o=document.createElement('option'); o.value=m.name; o.textContent=m.name; sel.appendChild(o); });
+}
+
+function doMemberStart(){
+  const name=document.getElementById('member-sel').value;
+  if(!name){ alert('名前を選択してください'); return; }
+  showMemberQR(name);
+}
+
+function doBossStart(){ loadSt(); showPassport(); }
+
+function showMemberQR(name){
+  document.getElementById('m-name').textContent=name;
+  const me=MEMBERS.find(m=>m.name===name);
+  const av=document.getElementById('m-avatar');
+  av.innerHTML=me?`<img src="${me.img}" alt="${me.name}"/>`:'🧑‍💼';
+  const qc=document.getElementById('m-qr');
+  qc.innerHTML='';
+  new QRCode(qc,{ text:'mdtpj:'+name, width:200, height:200, colorDark:'#1c2b4a', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.H });
+  show('s-member');
+}
+
+function showPassport(){
+  loadSt();
+  const got=Object.keys(stamps).length, tot=MEMBERS.length;
+  document.getElementById('got-n').textContent=got;
+  document.getElementById('tot-n').textContent=tot;
+  document.getElementById('prf').style.width=Math.round(got/tot*100)+'%';
+  const grid=document.getElementById('sgrid');
+  grid.innerHTML='';
+  MEMBERS.forEach(m=>{
+    const has=!!stamps[m.name];
+    const cell=document.createElement('div');
+    cell.className='ss'+(has?' got':'');
+    cell.innerHTML=`<div class="siw"><img src="${m.img}" alt="${m.name}"/></div><div class="sn">${m.name}</div><div class="sm"><span>GET<br>✓</span></div>`;
+    grid.appendChild(cell);
+  });
+  show('s-passport');
+}
+
+function showScanner(){
+  const sel=document.getElementById('demo-sel');
+  sel.innerHTML='<option value="">-- メンバーを選択 --</option>';
+  MEMBERS.forEach(m=>{ const o=document.createElement('option'); o.value=m.name; o.textContent=m.name+(stamps[m.name]?' ✓':''); sel.appendChild(o); });
+  show('s-scanner');
+  startQR();
+}
+
+function startQR(){
+  if(typeof Html5Qrcode==='undefined') return;
+  if(qrSc){ qrSc.stop().catch(()=>{}); }
+  qrSc=new Html5Qrcode("reader-el");
+  qrSc.start({facingMode:"environment"},{fps:10,qrbox:{width:200,height:200}},text=>{ stopQR(); processStamp(text); },()=>{}).catch(()=>{});
+}
+
+function stopQR(){ if(qrSc){ qrSc.stop().catch(()=>{}); qrSc=null; } }
+
+function demoStamp(){
+  const v=document.getElementById('demo-sel').value;
+  if(!v){ alert('メンバーを選択してください'); return; }
+  stopQR(); processStamp('mdtpj:'+v);
+}
+
+function processStamp(text){
+  stopQR();
+  const name=text.startsWith('mdtpj:') ? text.slice(6) : text;
+  const member=MEMBERS.find(m=>m.name===name);
+  if(!member){ alert('このQRは認識できません'); showPassport(); return; }
+  if(stamps[name]){ alert(name+' さんのスタンプはすでに取得済みです！'); showPassport(); return; }
+  stamps[name]=new Date().toISOString();
+  saveSt();
+  document.getElementById('suc-img').src=member.img;
+  document.getElementById('suc-title').textContent=name+' のスタンプ取得！';
+  document.getElementById('suc-sub').textContent='パスポートに「'+name+'」\nのスタンプが押されました！';
+  document.getElementById('cbox').style.display=(Object.keys(stamps).length>=MEMBERS.length)?'block':'none';
+  show('s-success');
+}
+
+function closeScanner(){ stopQR(); showPassport(); }
+function goBack(){ stopQR(); show('s-start'); }
+
+initStart();
+</script>
+</body>
+</html>
