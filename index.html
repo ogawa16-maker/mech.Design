@@ -96,7 +96,9 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
 .reset-btn:hover{background:rgba(139,32,48,.06);}
 
 /* ===== SCANNER ===== */
-.scw{padding:16px 16px;}
+.scw{padding:0;}
+.scanner-modal{position:fixed;inset:0;background:rgba(10,15,30,.95);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+.scanner-modal-box{width:100%;max-width:360px;}
 .sbox{border:1.5px solid rgba(28,43,74,.15);border-radius:10px;overflow:hidden;margin-bottom:12px;background:white;}
 .sbar{background:var(--navy);padding:10px 14px;font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
 .da{padding:12px 14px 14px;}
@@ -268,23 +270,27 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
 <!-- ===== SCANNER ===== -->
 <div class="screen" id="s-scanner">
   <div class="scw">
-    <div class="pbar" style="margin-bottom:14px;">
-      <div>
-        <div class="pbl">SCANNING NOW</div>
-        <div class="pbn" style="font-size:15px;">メンバーのQRをスキャン</div>
+    <div class="scanner-modal">
+      <div class="scanner-modal-box">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div>
+            <div style="font-size:9px;letter-spacing:2px;color:rgba(200,168,75,.5);">SCANNING NOW</div>
+            <div style="font-family:'Playfair Display',serif;color:var(--gold);font-size:16px;margin-top:2px;">メンバーのQRをスキャン</div>
+          </div>
+          <div style="color:var(--gold);font-size:22px;">📷</div>
+        </div>
+        <div class="sbox">
+          <div class="sbar">▶ SCAN MEMBER QR CODE</div>
+          <div id="reader-el"></div>
+          <div class="da">
+            <div class="dl">カメラが使えない場合はここから選択</div>
+            <select class="ds" id="demo-sel"></select>
+            <button class="sab" onclick="demoStamp()">スタンプを押す</button>
+          </div>
+        </div>
+        <button class="gb" style="color:rgba(200,168,75,.6);margin-top:4px;" onclick="closeScanner()">← キャンセル</button>
       </div>
-      <div style="color:var(--gold);font-size:22px;">📷</div>
     </div>
-    <div class="sbox">
-      <div class="sbar">▶ SCAN MEMBER QR CODE</div>
-      <div id="reader-el"></div>
-      <div class="da">
-        <div class="dl">カメラが使えない場合はここから選択</div>
-        <select class="ds" id="demo-sel"></select>
-        <button class="sab" onclick="demoStamp()">スタンプを押す</button>
-      </div>
-    </div>
-    <button class="gb" onclick="closeScanner()">← キャンセル</button>
   </div>
 </div>
 
@@ -353,9 +359,9 @@ const IMG_DESIGNKUN = `data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
 
 // 4キャラクター定義（imgはbase64）
 const CHARAS = [
-  { name:"パテ丸くん",         img:IMG_PATEMARU, desc:"パテ丸くんと一緒にお祝い！",             color:"#1c6bb5" },
-  { name:"ミャクミャク",   img:IMG_MYAKU,    desc:"ミャクミャクが喜んでいる！",         color:"#e83c5a" },
-  { name:"トゥンクトゥンク", img:IMG_TUNK,     desc:"トゥンクトゥンクが応援してる！",       color:"#2aaa5c" },
+  { name:"パテ丸くん",       img:IMG_PATEMARU,  desc:"パテ丸くんと一緒にお祝い！",           color:"#1c6bb5" },
+  { name:"ミャクミャク",     img:IMG_MYAKU,     desc:"ミャクミャクが喜んでいる！",           color:"#e83c5a" },
+  { name:"トゥンクトゥンク", img:IMG_TUNK,      desc:"トゥンクトゥンクが応援してる！",       color:"#2aaa5c" },
   { name:"デザイン思考くん", img:IMG_DESIGNKUN, desc:"デザイン思考から生まれたPROTOSMITH！", color:"#e8a030" },
 ];
 
