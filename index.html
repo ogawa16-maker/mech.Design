@@ -191,7 +191,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
     </div>
   </div>
   <div class="hdr-text">
-    <div class="hdr-main">交流スタンプパスポート</div>
+    <div class="hdr-main">2026.3.25 交流スタンプパスポート</div>
     <div class="hdr-sub">COMMUNICATION STAMP PASSPORT</div>
   </div>
   <div class="gold-rule"></div>
@@ -255,6 +255,14 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
     <button class="scbtn" onclick="showScanner()">📷 QRコードをスキャン</button>
     <div class="stit">▸ MEMBER STAMPS ◂</div>
     <div class="sgrid" id="sgrid"></div>
+    <button class="scbtn" onclick="showScanner()" style="margin-bottom:8px;">📷 QRコードをスキャン</button>
+    <!-- コンプリートキャラ表示エリア -->
+    <div id="complete-chara-area" style="display:none;text-align:center;padding:20px 0 8px;">
+      <div style="font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">▸ COMPLETE! ◂</div>
+      <div id="passport-chara-icon" style="font-size:100px;display:block;margin-bottom:8px;animation:popIn .6s ease both;"></div>
+      <div id="passport-chara-name" style="font-size:13px;color:var(--navy);font-weight:500;margin-bottom:4px;"></div>
+      <div style="font-size:11px;color:var(--muted);">全メンバーとのコミュニケーション達成！</div>
+    </div>
     <button class="gb" onclick="goBack()">← 戻る</button>
     <button class="reset-btn" onclick="confirmReset()">🗑 スタンプをリセット</button>
   </div>
@@ -438,6 +446,17 @@ function showPassport(){
     grid.appendChild(cell);
   });
   show('s-passport');
+  // すでにコンプリート済みならキャラエリア表示
+  const area=document.getElementById('complete-chara-area');
+  if(got>=tot){
+    area.style.display='block';
+    // キャラが未設定なら今のcurrentCharaIdxで表示
+    if(!document.getElementById('passport-chara-icon').textContent){
+      updatePassportChara();
+    }
+  } else {
+    area.style.display='none';
+  }
 }
 
 function showScanner(){
@@ -450,12 +469,20 @@ function showScanner(){
 
 function startQR(){
   if(typeof Html5Qrcode==='undefined') return;
-  if(qrSc){ qrSc.stop().catch(()=>{}); }
+  if(qrSc){ qrSc.stop().catch(()=>{}); qrSc=null; }
+  // reader-elをリセット
+  document.getElementById('reader-el').innerHTML='';
   qrSc=new Html5Qrcode("reader-el");
-  qrSc.start({facingMode:"environment"},{fps:10,qrbox:{width:200,height:200}},
+  qrSc.start(
+    {facingMode:"environment"},
+    {fps:10,qrbox:{width:200,height:200}},
     text=>{ stopQR(); processStamp(text); },
     ()=>{}
-  ).catch(()=>{}); // カメラ拒否でもデモ選択は使える
+  ).catch(err=>{
+    // カメラ拒否・エラー時でもスキャン画面はそのまま表示、手動選択が使える
+    qrSc=null;
+    document.getElementById('reader-el').innerHTML='<div style="padding:16px;text-align:center;font-size:12px;color:var(--muted);">カメラを使用できません。<br>下のリストからメンバーを選択してください。</div>';
+  });
 }
 
 function stopQR(){ if(qrSc){ qrSc.stop().catch(()=>{}); qrSc=null; } }
@@ -498,9 +525,20 @@ function processStamp(text){
 
 // ===== コンプリートポップアップ =====
 function showCompletePopup(){
-  currentCharaIdx = 0;
+  // ランダムキャラ選択
+  currentCharaIdx = Math.floor(Math.random() * CHARAS.length);
+  document.querySelectorAll('.chara-tab').forEach((t,i)=>t.classList.toggle('active',i===currentCharaIdx));
   updateCharaDisplay();
   document.getElementById('complete-popup').classList.add('open');
+  // パスポート画面のキャラエリアも更新
+  updatePassportChara();
+}
+function updatePassportChara(){
+  const ch=CHARAS[currentCharaIdx];
+  const area=document.getElementById('complete-chara-area');
+  area.style.display='block';
+  document.getElementById('passport-chara-icon').textContent=ch.icon;
+  document.getElementById('passport-chara-name').textContent=ch.name;
 }
 function closeComplete(){
   document.getElementById('complete-popup').classList.remove('open');
@@ -530,6 +568,9 @@ function closeConfirm(){
 function doReset(){
   stamps={};
   saveSt();
+  currentCharaIdx=0;
+  document.getElementById('complete-chara-area').style.display='none';
+  document.getElementById('passport-chara-icon').textContent='';
   closeConfirm();
   showPassport();
 }
