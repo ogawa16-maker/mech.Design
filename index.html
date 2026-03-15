@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -8,104 +9,196 @@
 <style>
 :root{--navy:#1c2b4a;--gold:#c8a84b;--cream:#f4efe4;--red:#8b2030;--muted:rgba(28,43,74,.45);}
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{background:#0e1625;min-height:100%;}
+html,body{background:#1a2744;min-height:100%;}
 body{font-family:'Noto Sans JP',sans-serif;}
 .app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);position:relative;overflow-x:hidden;margin:0 auto;}
 .app::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(160,140,100,.06) 28px);pointer-events:none;z-index:0;}
-.hdr{background:var(--navy);padding:20px 20px 16px;position:relative;overflow:hidden;z-index:1;}
-.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(200,168,75,.05) 6px,rgba(200,168,75,.05) 12px);}
-.hdr-inner{position:relative;z-index:1;display:flex;align-items:center;gap:12px;}
-.hdr-emblem{width:40px;height:40px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
-.hdr-main{font-family:'Playfair Display',serif;color:var(--gold);font-size:15px;letter-spacing:1.5px;}
-.hdr-sub{color:rgba(200,168,75,.5);font-size:9px;letter-spacing:2px;margin-top:2px;}
-.gold-rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-top:12px;}
+
+/* ===== HEADER ===== */
+.hdr{background:var(–navy);padding:0;position:relative;overflow:hidden;z-index:1;}
+.hdr::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(200,168,75,.04) 6px,rgba(200,168,75,.04) 12px);}
+
+/* パスポートカバーイラスト */
+.passport-cover{position:relative;z-index:1;padding:24px 24px 0;display:flex;flex-direction:column;align-items:center;}
+.passport-book{width:160px;height:220px;background:linear-gradient(160deg,#1e3a6e 0%,#152a54 40%,#0e1e3d 100%);border-radius:8px 16px 16px 8px;position:relative;box-shadow:4px 6px 20px rgba(0,0,0,.5),-2px 0 8px rgba(0,0,0,.3);margin-bottom:16px;}
+.passport-book::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:10px;background:linear-gradient(90deg,#0a1628,#1a2e55);border-radius:8px 0 0 8px;}
+.passport-book::after{content:’’;position:absolute;left:10px;top:0;bottom:0;width:3px;background:linear-gradient(90deg,rgba(0,0,0,.3),transparent);}
+.pb-inner{position:absolute;inset:0 0 0 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px;}
+.pb-country{color:var(–gold);font-size:9px;letter-spacing:3px;text-align:center;line-height:1.8;}
+.pb-emblem{width:52px;height:52px;}
+.pb-japan{color:var(–gold);font-family:‘Playfair Display’,serif;font-size:13px;letter-spacing:4px;}
+.pb-type{color:rgba(200,168,75,.5);font-size:8px;letter-spacing:3px;}
+.pb-chip{width:20px;height:14px;border:1px solid rgba(200,168,75,.4);border-radius:2px;margin-top:4px;}
+
+.hdr-text{position:relative;z-index:1;text-align:center;padding:0 20px 18px;}
+.hdr-main{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:17px;letter-spacing:2px;line-height:1.3;}
+.hdr-sub{color:rgba(200,168,75,.5);font-size:9px;letter-spacing:3px;margin-top:5px;}
+.gold-rule{height:1px;background:linear-gradient(90deg,transparent,var(–gold),transparent);margin:10px 20px 0;}
+
+/* ===== SCREENS ===== */
 .screen{display:none;position:relative;z-index:1;}
 .screen.active{display:block;}
 .pad{padding:22px 20px 20px;}
 .card{border-radius:10px;padding:18px 16px;margin-bottom:14px;}
 .card-w{background:white;border:1px solid rgba(28,43,74,.12);}
-.card-d{background:var(--navy);}
-.ct{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:3px;}
-.ct-n{color:var(--navy);}
-.ct-g{color:var(--gold);}
+.card-d{background:var(–navy);}
+.ct{font-family:‘Playfair Display’,serif;font-size:15px;margin-bottom:3px;}
+.ct-n{color:var(–navy);}
+.ct-g{color:var(–gold);}
 .cd{font-size:11px;margin-bottom:14px;letter-spacing:.5px;}
-.cd-n{color:var(--muted);}
+.cd-n{color:var(–muted);}
 .cd-g{color:rgba(200,168,75,.5);}
-.fl{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:7px;}
-select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgba(28,43,74,.2);background:transparent;font-family:'Noto Serif JP',serif;font-size:16px;color:var(--navy);outline:none;margin-bottom:14px;cursor:pointer;appearance:auto;}
-.pb{width:100%;padding:13px;background:var(--navy);color:var(--gold);border:none;font-family:'Playfair Display',serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
-.pb:hover{opacity:.87;}
-.bb{width:100%;padding:13px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);font-family:'Playfair Display',serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
+.fl{font-size:10px;letter-spacing:2px;color:var(–muted);text-transform:uppercase;margin-bottom:7px;}
+select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgba(28,43,74,.2);background:transparent;font-family:‘Noto Serif JP’,serif;font-size:16px;color:var(–navy);outline:none;margin-bottom:14px;cursor:pointer;appearance:auto;}
+.pb-btn{width:100%;padding:13px;background:var(–navy);color:var(–gold);border:none;font-family:‘Playfair Display’,serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
+.pb-btn:hover{opacity:.87;}
+.bb{width:100%;padding:13px;background:transparent;border:1.5px solid var(–gold);color:var(–gold);font-family:‘Playfair Display’,serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
 .bb:hover{background:rgba(200,168,75,.1);}
-.gb{width:100%;padding:10px;background:transparent;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:4px;}
+.gb{width:100%;padding:10px;background:transparent;border:none;color:var(–muted);font-size:13px;cursor:pointer;margin-top:4px;}
+
+/* ===== MEMBER QR ===== */
 .mw{padding:22px 20px;}
-.idc{background:var(--navy);border-radius:8px;padding:14px 16px;margin-bottom:18px;display:flex;align-items:center;gap:14px;}
-.idav{width:46px;height:46px;border:1.5px solid var(--gold);border-radius:50%;overflow:hidden;flex-shrink:0;background:rgba(200,168,75,.15);display:flex;align-items:center;justify-content:center;}
+.idc{background:var(–navy);border-radius:8px;padding:14px 16px;margin-bottom:18px;display:flex;align-items:center;gap:14px;}
+.idav{width:46px;height:46px;border:1.5px solid var(–gold);border-radius:50%;overflow:hidden;flex-shrink:0;background:rgba(200,168,75,.15);display:flex;align-items:center;justify-content:center;}
 .idav canvas{width:46px!important;height:46px!important;border-radius:50%;}
 .idl{font-size:9px;letter-spacing:2px;color:rgba(200,168,75,.5);}
-.idn{font-family:'Playfair Display',serif;color:var(--gold);font-size:18px;margin-top:1px;}
+.idn{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:18px;margin-top:1px;}
 .idr{font-size:10px;color:rgba(200,168,75,.4);margin-top:2px;}
 .qrb{background:white;border:1px solid rgba(28,43,74,.1);border-radius:10px;padding:22px;text-align:center;margin-bottom:14px;}
-.qrb p{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6;}
-.pw{padding:16px 16px;}
-.pbar{background:var(--navy);border-radius:8px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.qrb p{font-size:11px;color:var(–muted);margin-top:14px;line-height:1.6;}
+
+/* ===== PASSPORT ===== */
+.pw{padding:16px 16px 24px;}
+.pbar{background:var(–navy);border-radius:8px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
 .pbl{font-size:9px;letter-spacing:2px;color:rgba(200,168,75,.5);}
-.pbn{font-family:'Playfair Display',serif;color:var(--gold);font-size:18px;margin-top:1px;}
+.pbn{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:18px;margin-top:1px;}
 .pbr{text-align:right;}
-.pbc{font-family:'Playfair Display',serif;color:var(--gold);font-size:22px;}
+.pbc{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:22px;}
 .pbof{font-size:10px;color:rgba(200,168,75,.5);}
 .prg{height:2px;background:rgba(28,43,74,.1);border-radius:1px;margin-bottom:14px;overflow:hidden;}
-.prf{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold));transition:width .5s;}
-.stit{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;text-align:center;margin-bottom:10px;}
+.prf{height:100%;background:linear-gradient(90deg,var(–navy),var(–gold));transition:width .5s;}
+.stit{font-size:9px;letter-spacing:3px;color:var(–muted);text-transform:uppercase;text-align:center;margin-bottom:10px;}
 .sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:14px;}
 .ss{background:white;border:1px dashed rgba(28,43,74,.18);border-radius:8px;padding:10px 8px 8px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;min-height:108px;justify-content:center;}
 .ss.got{border:1px solid rgba(28,43,74,.1);}
 .siw{width:64px;height:64px;border-radius:8px;overflow:hidden;filter:grayscale(1) opacity(.1);transition:filter .4s;}
 .ss.got .siw{filter:none;}
 .siw canvas{width:64px!important;height:64px!important;}
-.sn{font-size:11px;color:var(--navy);margin-top:7px;opacity:.4;text-align:center;}
+.sn{font-size:11px;color:var(–navy);margin-top:7px;opacity:.4;text-align:center;}
 .ss.got .sn{opacity:.85;font-weight:500;}
 .sm{position:absolute;top:5px;right:5px;width:28px;height:28px;border:2px solid rgba(139,32,48,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(-18deg);opacity:0;transition:opacity .3s;}
 .ss.got .sm{opacity:1;}
 .sm span{font-size:5px;color:rgba(139,32,48,.6);font-weight:700;text-align:center;line-height:1.2;}
-.scbtn{width:100%;padding:13px;background:transparent;border:1.5px solid var(--navy);color:var(--navy);font-size:14px;letter-spacing:1px;cursor:pointer;border-radius:4px;margin-bottom:8px;}
-.scbtn:hover{background:var(--navy);color:var(--gold);}
+.scbtn{width:100%;padding:13px;background:transparent;border:1.5px solid var(–navy);color:var(–navy);font-size:14px;letter-spacing:1px;cursor:pointer;border-radius:4px;margin-bottom:8px;}
+.scbtn:hover{background:var(–navy);color:var(–gold);}
+
+/* リセットボタン */
+.reset-btn{width:100%;padding:11px;background:transparent;border:1px solid rgba(139,32,48,.3);color:rgba(139,32,48,.6);font-size:12px;letter-spacing:1px;cursor:pointer;border-radius:4px;margin-top:8px;}
+.reset-btn:hover{background:rgba(139,32,48,.06);}
+
+/* ===== SCANNER ===== */
 .scw{padding:16px 16px;}
 .sbox{border:1.5px solid rgba(28,43,74,.15);border-radius:10px;overflow:hidden;margin-bottom:12px;background:white;}
-.sbar{background:var(--navy);padding:10px 14px;font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
+.sbar{background:var(–navy);padding:10px 14px;font-size:10px;letter-spacing:2px;color:var(–gold);text-transform:uppercase;}
 .da{padding:12px 14px 14px;}
-.dl{font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:6px;}
-.ds{width:100%;padding:10px 12px;border:none;border-bottom:1.5px solid rgba(28,43,74,.2);background:transparent;font-size:14px;color:var(--navy);outline:none;margin-bottom:10px;cursor:pointer;appearance:auto;}
-.sab{width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:4px;font-size:14px;letter-spacing:1px;cursor:pointer;}
-.sucw{padding:40px 24px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.dl{font-size:10px;color:var(–muted);letter-spacing:1px;margin-bottom:6px;}
+.ds{width:100%;padding:10px 12px;border:none;border-bottom:1.5px solid rgba(28,43,74,.2);background:transparent;font-size:14px;color:var(–navy);outline:none;margin-bottom:10px;cursor:pointer;appearance:auto;}
+.sab{width:100%;padding:12px;background:var(–red);color:white;border:none;border-radius:4px;font-size:14px;letter-spacing:1px;cursor:pointer;}
+
+/* ===== SUCCESS ===== */
+.sucw{padding:32px 24px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;}
 .sucf{position:relative;width:128px;height:128px;margin:0 auto 22px;}
 .sucf canvas{width:128px!important;height:128px!important;border-radius:10px;}
 .r1,.r2{position:absolute;border:2.5px solid rgba(139,32,48,.35);border-radius:50%;transform:rotate(-14deg);animation:ri .5s ease both;}
 .r1{inset:-10px;}
 .r2{inset:-17px;border-width:1.5px;border-color:rgba(139,32,48,.18);animation-delay:.08s;}
 @keyframes ri{from{opacity:0;transform:rotate(-14deg) scale(1.45);}to{opacity:1;transform:rotate(-14deg) scale(1);}}
-.suct{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:6px;}
-.sucs{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:26px;white-space:pre-line;}
-.cbox{background:var(--navy);color:var(--gold);padding:14px 20px;border-radius:6px;margin-bottom:20px;width:100%;}
-.cboxt{font-family:'Playfair Display',serif;font-size:16px;margin-bottom:2px;}
-.cboxs{font-size:10px;opacity:.55;letter-spacing:1.5px;}
-.mrz{padding:10px 16px;border-top:1px solid rgba(28,43,74,.08);font-family:'Courier New',monospace;font-size:8.5px;color:rgba(28,43,74,.18);letter-spacing:.8px;line-height:1.7;word-break:break-all;position:relative;z-index:1;}
+.suct{font-family:‘Playfair Display’,serif;font-size:22px;color:var(–navy);margin-bottom:6px;}
+.sucs{font-size:13px;color:var(–muted);line-height:1.7;margin-bottom:26px;white-space:pre-line;}
+
+/* ===== COMPLETE POPUP ===== */
+.popup-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,.88);z-index:200;align-items:center;justify-content:center;padding:20px;}
+.popup-overlay.open{display:flex;}
+.popup-box{background:var(–cream);border-radius:16px;padding:28px 24px 24px;width:100%;max-width:360px;text-align:center;position:relative;overflow:hidden;}
+.popup-box::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(200,168,75,.04) 8px,rgba(200,168,75,.04) 16px);}
+.popup-inner{position:relative;z-index:1;}
+.popup-chara{font-size:80px;margin-bottom:12px;display:block;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes popIn{from{opacity:0;transform:scale(.3) rotate(-10deg);}to{opacity:1;transform:scale(1) rotate(0deg);}}
+.popup-title{font-family:‘Playfair Display’,serif;font-size:22px;color:var(–navy);margin-bottom:6px;}
+.popup-sub{font-size:12px;color:var(–muted);line-height:1.7;margin-bottom:6px;}
+.popup-chara-name{font-size:13px;color:var(–navy);font-weight:500;margin-bottom:20px;}
+.popup-chara-tabs{display:flex;gap:6px;margin-bottom:18px;justify-content:center;}
+.chara-tab{padding:6px 10px;border:1px solid rgba(28,43,74,.2);border-radius:20px;font-size:11px;cursor:pointer;background:white;color:var(–navy);transition:all .15s;}
+.chara-tab.active{background:var(–navy);color:var(–gold);border-color:var(–navy);}
+.popup-close{width:100%;padding:13px;background:var(–navy);color:var(–gold);border:none;font-family:‘Playfair Display’,serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
+
+/* ===== CONFIRM POPUP ===== */
+.confirm-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,.8);z-index:300;align-items:center;justify-content:center;padding:24px;}
+.confirm-overlay.open{display:flex;}
+.confirm-box{background:white;border-radius:12px;padding:24px;width:100%;max-width:300px;text-align:center;}
+.confirm-title{font-size:16px;font-weight:500;color:var(–navy);margin-bottom:8px;}
+.confirm-msg{font-size:13px;color:var(–muted);line-height:1.6;margin-bottom:20px;}
+.confirm-btns{display:flex;gap:10px;}
+.confirm-no{flex:1;padding:11px;background:transparent;border:1px solid rgba(28,43,74,.2);color:var(–muted);border-radius:6px;cursor:pointer;font-size:14px;}
+.confirm-yes{flex:1;padding:11px;background:var(–red);color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px;}
+
+.mrz{padding:10px 16px;border-top:1px solid rgba(28,43,74,.08);font-family:‘Courier New’,monospace;font-size:8.5px;color:rgba(28,43,74,.18);letter-spacing:.8px;line-height:1.7;word-break:break-all;position:relative;z-index:1;}
 </style>
+
 </head>
 <body>
 <div class="app">
+
+<!-- ===== HEADER ===== -->
+
 <div class="hdr">
-  <div class="hdr-inner">
-    <div class="hdr-emblem">⚙️</div>
-    <div>
-      <div class="hdr-main">Mech. Design Thinking PJ</div>
-      <div class="hdr-sub">STAMP PASSPORT · 2025–2026</div>
+  <div class="passport-cover">
+    <!-- パスポートブックイラスト -->
+    <div class="passport-book">
+      <div class="pb-inner">
+        <div class="pb-country">メック・デザイン<br>思考プロジェクト</div>
+        <!-- 菊花紋SVG -->
+        <svg class="pb-emblem" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="28" stroke="#c8a84b" stroke-width="1"/>
+          <circle cx="30" cy="30" r="22" stroke="#c8a84b" stroke-width=".5"/>
+          <g stroke="#c8a84b" stroke-width="1.2">
+            <line x1="30" y1="4" x2="30" y2="56"/>
+            <line x1="4" y1="30" x2="56" y2="30"/>
+            <line x1="11" y1="11" x2="49" y2="49"/>
+            <line x1="49" y1="11" x2="11" y2="49"/>
+            <line x1="4.5" y1="20" x2="55.5" y2="40"/>
+            <line x1="4.5" y1="40" x2="55.5" y2="20"/>
+            <line x1="20" y1="4.5" x2="40" y2="55.5"/>
+            <line x1="40" y1="4.5" x2="20" y2="55.5"/>
+          </g>
+          <circle cx="30" cy="30" r="7" fill="#c8a84b" opacity=".9"/>
+          <circle cx="30" cy="30" r="4" fill="#1c2b4a"/>
+          <g fill="#c8a84b">
+            <ellipse cx="30" cy="10" rx="2.5" ry="4"/>
+            <ellipse cx="30" cy="50" rx="2.5" ry="4"/>
+            <ellipse cx="10" cy="30" rx="4" ry="2.5"/>
+            <ellipse cx="50" cy="30" rx="4" ry="2.5"/>
+            <ellipse cx="15.9" cy="15.9" rx="2.5" ry="4" transform="rotate(45 15.9 15.9)"/>
+            <ellipse cx="44.1" cy="44.1" rx="2.5" ry="4" transform="rotate(45 44.1 44.1)"/>
+            <ellipse cx="44.1" cy="15.9" rx="2.5" ry="4" transform="rotate(-45 44.1 15.9)"/>
+            <ellipse cx="15.9" cy="44.1" rx="2.5" ry="4" transform="rotate(-45 15.9 44.1)"/>
+          </g>
+        </svg>
+        <div class="pb-japan">MECH. DESIGN</div>
+        <div class="pb-type">THINKING PJ · 2025–2026</div>
+        <div class="pb-chip"></div>
+      </div>
     </div>
+  </div>
+  <div class="hdr-text">
+    <div class="hdr-main">交流スタンプパスポート</div>
+    <div class="hdr-sub">COMMUNICATION STAMP PASSPORT</div>
   </div>
   <div class="gold-rule"></div>
 </div>
 
-<!-- START -->
+<!-- ===== START ===== -->
+
 <div class="screen active" id="s-start">
   <div class="pad">
     <div class="card card-w">
@@ -113,7 +206,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
       <div class="cd cd-n">名前を選んでQRを表示してください</div>
       <div class="fl">氏名を選択</div>
       <select class="ns" id="member-sel"></select>
-      <button class="pb" onclick="doMemberStart()">QRコードを表示する</button>
+      <button class="pb-btn" onclick="doMemberStart()">QRコードを表示する</button>
     </div>
     <div class="card card-d">
       <div class="ct ct-g">応援者の方</div>
@@ -124,7 +217,8 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
   <div class="mrz">P&lt;JPN&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>MECH&lt;DESIGN&lt;THINKING&lt;PJ&lt;2025&lt;2026&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
 </div>
 
-<!-- MEMBER QR -->
+<!-- ===== MEMBER QR ===== -->
+
 <div class="screen" id="s-member">
   <div class="mw">
     <div class="idc">
@@ -143,7 +237,8 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
   </div>
 </div>
 
-<!-- BOSS PASSPORT -->
+<!-- ===== PASSPORT ===== -->
+
 <div class="screen" id="s-passport">
   <div class="pw">
     <div class="pbar">
@@ -161,10 +256,12 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
     <div class="sgrid" id="sgrid"></div>
     <button class="scbtn" onclick="showScanner()">📷 QRコードをスキャン</button>
     <button class="gb" onclick="goBack()">← 戻る</button>
+    <button class="reset-btn" onclick="confirmReset()">🗑 スタンプをリセット</button>
   </div>
 </div>
 
-<!-- SCANNER -->
+<!-- ===== SCANNER ===== -->
+
 <div class="screen" id="s-scanner">
   <div class="scw">
     <div class="pbar" style="margin-bottom:14px;">
@@ -178,7 +275,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
       <div class="sbar">▶ SCAN MEMBER QR CODE</div>
       <div id="reader-el"></div>
       <div class="da">
-        <div class="dl">デモ用：メンバーを選択して押す</div>
+        <div class="dl">カメラが使えない場合はここから選択</div>
         <select class="ds" id="demo-sel"></select>
         <button class="sab" onclick="demoStamp()">スタンプを押す</button>
       </div>
@@ -187,7 +284,8 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
   </div>
 </div>
 
-<!-- SUCCESS -->
+<!-- ===== SUCCESS ===== -->
+
 <div class="screen" id="s-success">
   <div class="sucw">
     <div class="sucf" id="suc-frame">
@@ -196,17 +294,49 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
     </div>
     <div class="suct" id="suc-title">スタンプ取得！</div>
     <div class="sucs" id="suc-sub">—</div>
-    <div class="cbox" id="cbox" style="display:none">
-      <div class="cboxt">PASSPORT COMPLETE</div>
-      <div class="cboxs">全メンバーとコミュニケーション達成！</div>
-    </div>
-    <button class="pb" onclick="showPassport()">PASSPORT を確認する</button>
+    <button class="pb-btn" onclick="showPassport()">PASSPORT を確認する</button>
   </div>
 </div>
+
+</div><!-- .app -->
+
+<!-- ===== COMPLETE POPUP ===== -->
+
+<div class="popup-overlay" id="complete-popup">
+  <div class="popup-box">
+    <div class="popup-inner">
+      <div class="popup-chara-tabs">
+        <div class="chara-tab active" onclick="switchChara(0)">パテ丸</div>
+        <div class="chara-tab" onclick="switchChara(1)">ミャクミャク</div>
+        <div class="chara-tab" onclick="switchChara(2)">トゥンク</div>
+        <div class="chara-tab" onclick="switchChara(3)">オリジナル</div>
+      </div>
+      <div class="popup-chara" id="popup-chara-icon">🤖</div>
+      <div class="popup-title">PASSPORT COMPLETE!</div>
+      <div class="popup-sub">全メンバーとのコミュニケーション達成！</div>
+      <div class="popup-chara-name" id="popup-chara-name">パテ丸と一緒にお祝い！</div>
+      <button class="popup-close" onclick="closeComplete()">とじる</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFIRM RESET POPUP ===== -->
+
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-title">スタンプをリセット</div>
+    <div class="confirm-msg">集めたスタンプが全て消えます。<br>本当にリセットしますか？</div>
+    <div class="confirm-btns">
+      <button class="confirm-no" onclick="closeConfirm()">キャンセル</button>
+      <button class="confirm-yes" onclick="doReset()">リセット</button>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
 <script>
 const MEMBERS = [
   { name:"大谷",  color:"#4A90D9", symbol:"◆", bg:"#E8F4FD", accent:"#2171B5" },
@@ -221,58 +351,46 @@ const MEMBERS = [
   { name:"小林",  color:"#9B6BB5", symbol:"✿", bg:"#F5EEF9", accent:"#7A4A95" },
 ];
 
+// 4キャラクター定義
+const CHARAS = [
+  { name:"パテ丸",       icon:"🤖", desc:"パテ丸と一緒にお祝い！",         color:"#1c6bb5" },
+  { name:"ミャクミャク", icon:"🫀", desc:"ミャクミャクが喜んでいる！",     color:"#e83c5a" },
+  { name:"トゥンクトゥン",icon:"💚",desc:"トゥンクトゥンが応援してる！",   color:"#2aaa5c" },
+  { name:"デザインくん", icon:"⚙️✨",desc:"デザイン思考から生まれた新キャラ！デザインくんが祝福！", color:"#8b45c8" },
+];
+
 const KEY = 'mdtpj_stamps';
 const BASE_URL = 'https://ogawa16-maker.github.io/mech.Design/';
 let stamps = {};
 let qrSc = null;
-
-// スタンプ画像をCanvasで生成
-function makeStampCanvas(m, size) {
-  const c = document.createElement('canvas');
-  c.width = size; c.height = size;
-  const ctx = c.getContext('2d');
-  const cx = size/2, cy = size/2, r = size*0.42;
-
-  // 背景
-  ctx.fillStyle = m.bg;
-  ctx.beginPath();
-  ctx.roundRect(0, 0, size, size, size*0.12);
-  ctx.fill();
-
-  // 外円
-  ctx.strokeStyle = m.color;
-  ctx.lineWidth = size*0.045;
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI*2);
-  ctx.stroke();
-
-  // 点線内円
-  ctx.strokeStyle = m.color;
-  ctx.lineWidth = size*0.02;
-  ctx.setLineDash([size*0.04, size*0.04]);
-  ctx.beginPath();
-  ctx.arc(cx, cy, r*0.78, 0, Math.PI*2);
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  // シンボル
-  ctx.fillStyle = m.color;
-  ctx.font = `bold ${size*0.35}px serif`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(m.symbol, cx, cy*0.92);
-
-  // 名前
-  ctx.font = `${size*0.13}px 'Noto Sans JP', sans-serif`;
-  ctx.fillStyle = m.accent;
-  ctx.fillText(m.name, cx, cy*1.72);
-
-  return c;
-}
+let currentCharaIdx = 0;
 
 function loadSt(){ try{ stamps=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ stamps={}; } }
 function saveSt(){ try{ localStorage.setItem(KEY,JSON.stringify(stamps)); }catch(e){} }
 function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+function makeStampCanvas(m, size){
+  const c=document.createElement('canvas');
+  c.width=size; c.height=size;
+  const ctx=c.getContext('2d');
+  const cx=size/2, cy=size/2, r=size*0.42;
+  ctx.fillStyle=m.bg;
+  ctx.beginPath(); ctx.roundRect(0,0,size,size,size*0.12); ctx.fill();
+  ctx.strokeStyle=m.color; ctx.lineWidth=size*0.045;
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+  ctx.strokeStyle=m.color; ctx.lineWidth=size*0.02;
+  ctx.setLineDash([size*0.04,size*0.04]);
+  ctx.beginPath(); ctx.arc(cx,cy,r*0.78,0,Math.PI*2); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle=m.color;
+  ctx.font=`bold ${size*0.35}px serif`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(m.symbol,cx,cy*0.92);
+  ctx.font=`${size*0.13}px 'Noto Sans JP',sans-serif`;
+  ctx.fillStyle=m.accent;
+  ctx.fillText(m.name,cx,cy*1.72);
+  return c;
+}
 
 function initStart(){
   const sel=document.getElementById('member-sel');
@@ -293,11 +411,10 @@ function showMemberQR(name){
   const me=MEMBERS.find(m=>m.name===name);
   const av=document.getElementById('m-avatar');
   av.innerHTML='';
-  if(me){ av.appendChild(makeStampCanvas(me, 46)); }
-
+  if(me){ av.appendChild(makeStampCanvas(me,46)); }
   const qc=document.getElementById('m-qr');
   qc.innerHTML='';
-  new QRCode(qc,{ text: BASE_URL + '?m=' + encodeURIComponent(name), width:200, height:200, colorDark:'#1c2b4a', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.H });
+  new QRCode(qc,{ text:BASE_URL+'?m='+encodeURIComponent(name), width:200, height:200, colorDark:'#1c2b4a', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.H });
   show('s-member');
 }
 
@@ -315,7 +432,7 @@ function showPassport(){
     cell.className='ss'+(has?' got':'');
     const imgWrap=document.createElement('div');
     imgWrap.className='siw';
-    imgWrap.appendChild(makeStampCanvas(m, 64));
+    imgWrap.appendChild(makeStampCanvas(m,64));
     cell.appendChild(imgWrap);
     cell.innerHTML+=`<div class="sn">${m.name}</div><div class="sm"><span>GET<br>✓</span></div>`;
     grid.appendChild(cell);
@@ -335,7 +452,10 @@ function startQR(){
   if(typeof Html5Qrcode==='undefined') return;
   if(qrSc){ qrSc.stop().catch(()=>{}); }
   qrSc=new Html5Qrcode("reader-el");
-  qrSc.start({facingMode:"environment"},{fps:10,qrbox:{width:200,height:200}},text=>{ stopQR(); processStamp(text); },()=>{}).catch(()=>{});
+  qrSc.start({facingMode:"environment"},{fps:10,qrbox:{width:200,height:200}},
+    text=>{ stopQR(); processStamp(text); },
+    ()=>{}
+  ).catch(()=>{}); // カメラ拒否でもデモ選択は使える
 }
 
 function stopQR(){ if(qrSc){ qrSc.stop().catch(()=>{}); qrSc=null; } }
@@ -343,37 +463,75 @@ function stopQR(){ if(qrSc){ qrSc.stop().catch(()=>{}); qrSc=null; } }
 function demoStamp(){
   const v=document.getElementById('demo-sel').value;
   if(!v){ alert('メンバーを選択してください'); return; }
-  stopQR(); processStamp(BASE_URL+'?m='+encodeURIComponent(v));
+  stopQR();
+  processStamp(BASE_URL+'?m='+encodeURIComponent(v));
 }
 
 function processStamp(text){
   stopQR();
-  // URLパラメータ形式 (?m=名前) または旧形式 (mdtpj:名前) 両対応
-  let name = text;
-  try {
-    const url = new URL(text);
-    const m = url.searchParams.get('m');
-    if(m) name = m;
-  } catch(e) {
-    if(text.startsWith('mdtpj:')) name = text.slice(6);
+  let name=text;
+  try{
+    const url=new URL(text);
+    const m=url.searchParams.get('m');
+    if(m) name=decodeURIComponent(m);
+  }catch(e){
+    if(text.startsWith('mdtpj:')) name=text.slice(6);
   }
   const member=MEMBERS.find(m=>m.name===name);
-  if(!member){ alert('このQRは認識できません'); showPassport(); return; }
+  if(!member){ alert('このQRは認識できません: '+name); showPassport(); return; }
   if(stamps[name]){ alert(name+' さんのスタンプはすでに取得済みです！'); showPassport(); return; }
   stamps[name]=new Date().toISOString();
   saveSt();
 
-  // 成功画面にスタンプ画像をセット
   const frame=document.getElementById('suc-frame');
-  const existing=frame.querySelector('canvas');
-  if(existing) existing.remove();
-  const bigCanvas=makeStampCanvas(member, 128);
-  frame.insertBefore(bigCanvas, frame.firstChild);
-
+  const ex=frame.querySelector('canvas'); if(ex) ex.remove();
+  frame.insertBefore(makeStampCanvas(member,128),frame.firstChild);
   document.getElementById('suc-title').textContent=name+' のスタンプ取得！';
   document.getElementById('suc-sub').textContent='パスポートに「'+name+'」\nのスタンプが押されました！';
-  document.getElementById('cbox').style.display=(Object.keys(stamps).length>=MEMBERS.length)?'block':'none';
   show('s-success');
+
+  // コンプリートチェック
+  if(Object.keys(stamps).length >= MEMBERS.length){
+    setTimeout(()=>{ showCompletePopup(); }, 800);
+  }
+}
+
+// ===== コンプリートポップアップ =====
+function showCompletePopup(){
+  currentCharaIdx = 0;
+  updateCharaDisplay();
+  document.getElementById('complete-popup').classList.add('open');
+}
+function closeComplete(){
+  document.getElementById('complete-popup').classList.remove('open');
+  showPassport();
+}
+function switchChara(idx){
+  currentCharaIdx=idx;
+  document.querySelectorAll('.chara-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  // アニメーションリセット
+  const icon=document.getElementById('popup-chara-icon');
+  icon.style.animation='none';
+  requestAnimationFrame(()=>{ icon.style.animation=''; updateCharaDisplay(); });
+}
+function updateCharaDisplay(){
+  const ch=CHARAS[currentCharaIdx];
+  document.getElementById('popup-chara-icon').textContent=ch.icon;
+  document.getElementById('popup-chara-name').textContent=ch.desc;
+}
+
+// ===== リセット =====
+function confirmReset(){
+  document.getElementById('confirm-overlay').classList.add('open');
+}
+function closeConfirm(){
+  document.getElementById('confirm-overlay').classList.remove('open');
+}
+function doReset(){
+  stamps={};
+  saveSt();
+  closeConfirm();
+  showPassport();
 }
 
 function closeScanner(){ stopQR(); showPassport(); }
@@ -382,11 +540,13 @@ function goBack(){ stopQR(); show('s-start'); }
 initStart();
 
 // カメラでQRを読んでURLで開いた場合、自動でメンバー画面を表示
-const urlParams = new URLSearchParams(window.location.search);
-const autoMember = urlParams.get('m');
-if(autoMember && MEMBERS.find(m=>m.name===autoMember)){
-  showMemberQR(autoMember);
+const urlParams=new URLSearchParams(window.location.search);
+const autoMember=urlParams.get('m');
+if(autoMember){
+  const decoded=decodeURIComponent(autoMember);
+  if(MEMBERS.find(m=>m.name===decoded)) showMemberQR(decoded);
 }
 </script>
+
 </body>
 </html>
