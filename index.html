@@ -16,7 +16,7 @@ body{font-family:'Noto Sans JP',sans-serif;}
 
 /* ===== HEADER ===== */
 .hdr{background:var(–navy);padding:0;position:relative;overflow:hidden;z-index:1;}
-.hdr::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(200,168,75,.04) 6px,rgba(200,168,75,.04) 12px);}
+.hdr::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(74,158,221,.06) 6px,rgba(74,158,221,.06) 12px);}
 
 /* パスポートカバーイラスト */
 .passport-cover{position:relative;z-index:1;padding:24px 24px 0;display:flex;flex-direction:column;align-items:center;}
@@ -27,12 +27,12 @@ body{font-family:'Noto Sans JP',sans-serif;}
 .pb-country{color:var(–gold);font-size:9px;letter-spacing:3px;text-align:center;line-height:1.8;}
 .pb-emblem{width:52px;height:52px;}
 .pb-japan{color:var(–gold);font-family:‘Playfair Display’,serif;font-size:13px;letter-spacing:4px;}
-.pb-type{color:rgba(200,168,75,.5);font-size:8px;letter-spacing:3px;}
-.pb-chip{width:20px;height:14px;border:1px solid rgba(200,168,75,.4);border-radius:2px;margin-top:4px;}
+.pb-type{color:rgba(74,158,221,.7);font-size:8px;letter-spacing:3px;}
+.pb-chip{width:20px;height:14px;border:1px solid rgba(74,158,221,.6);border-radius:2px;margin-top:4px;}
 
 .hdr-text{position:relative;z-index:1;text-align:center;padding:0 20px 18px;}
 .hdr-main{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:17px;letter-spacing:2px;line-height:1.3;}
-.hdr-sub{color:rgba(200,168,75,.5);font-size:9px;letter-spacing:3px;margin-top:5px;}
+.hdr-sub{color:rgba(74,158,221,.7);font-size:9px;letter-spacing:3px;margin-top:5px;}
 .gold-rule{height:1px;background:linear-gradient(90deg,transparent,var(–gold),transparent);margin:10px 20px 0;}
 
 /* ===== SCREENS ===== */
@@ -47,34 +47,34 @@ body{font-family:'Noto Sans JP',sans-serif;}
 .ct-g{color:var(–gold);}
 .cd{font-size:11px;margin-bottom:14px;letter-spacing:.5px;}
 .cd-n{color:var(–muted);}
-.cd-g{color:rgba(200,168,75,.5);}
+.cd-g{color:rgba(74,158,221,.7);}
 .fl{font-size:10px;letter-spacing:2px;color:var(–muted);text-transform:uppercase;margin-bottom:7px;}
 select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgba(13,42,94,.2);background:transparent;font-family:‘Noto Serif JP’,serif;font-size:16px;color:var(–navy);outline:none;margin-bottom:14px;cursor:pointer;appearance:auto;}
 .pb-btn{width:100%;padding:13px;background:var(–navy);color:var(–gold);border:none;font-family:‘Playfair Display’,serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
 .pb-btn:hover{opacity:.87;}
 .bb{width:100%;padding:13px;background:transparent;border:1.5px solid var(–gold);color:var(–gold);font-family:‘Playfair Display’,serif;font-size:14px;letter-spacing:2px;cursor:pointer;border-radius:4px;}
-.bb:hover{background:rgba(200,168,75,.1);}
+.bb:hover{background:rgba(74,158,221,.12);}
 .gb{width:100%;padding:10px;background:transparent;border:none;color:var(–muted);font-size:13px;cursor:pointer;margin-top:4px;}
 
 /* ===== MEMBER QR ===== */
 .mw{padding:22px 20px;}
 .idc{background:var(–navy);border-radius:8px;padding:14px 16px;margin-bottom:18px;display:flex;align-items:center;gap:14px;}
-.idav{width:46px;height:46px;border:1.5px solid var(–gold);border-radius:50%;overflow:hidden;flex-shrink:0;background:rgba(200,168,75,.15);display:flex;align-items:center;justify-content:center;}
+.idav{width:46px;height:46px;border:1.5px solid var(–gold);border-radius:50%;overflow:hidden;flex-shrink:0;background:rgba(74,158,221,.2);display:flex;align-items:center;justify-content:center;}
 .idav canvas{width:46px!important;height:46px!important;border-radius:50%;}
-.idl{font-size:9px;letter-spacing:2px;color:rgba(200,168,75,.5);}
+.idl{font-size:9px;letter-spacing:2px;color:rgba(74,158,221,.7);}
 .idn{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:18px;margin-top:1px;}
-.idr{font-size:10px;color:rgba(200,168,75,.4);margin-top:2px;}
+.idr{font-size:10px;color:rgba(74,158,221,.6);margin-top:2px;}
 .qrb{background:#f0f7ff;border:1px solid rgba(74,158,221,.2);border-radius:10px;padding:22px;text-align:center;margin-bottom:14px;}
 .qrb p{font-size:11px;color:var(–muted);margin-top:14px;line-height:1.6;}
 
 /* ===== PASSPORT ===== */
 .pw{padding:16px 16px 24px;}
 .pbar{background:var(–navy);border-radius:8px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
-.pbl{font-size:9px;letter-spacing:2px;color:rgba(200,168,75,.5);}
+.pbl{font-size:9px;letter-spacing:2px;color:rgba(74,158,221,.7);}
 .pbn{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:18px;margin-top:1px;}
 .pbr{text-align:right;}
 .pbc{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:22px;}
-.pbof{font-size:10px;color:rgba(200,168,75,.5);}
+.pbof{font-size:10px;color:rgba(74,158,221,.7);}
 .prg{height:2px;background:rgba(13,42,94,.1);border-radius:1px;margin-bottom:14px;overflow:hidden;}
 .prf{height:100%;background:linear-gradient(90deg,var(–navy),var(–gold));transition:width .5s;}
 .stit{font-size:9px;letter-spacing:3px;color:var(–muted);text-transform:uppercase;text-align:center;margin-bottom:10px;}
@@ -89,8 +89,8 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
 .scbtn:hover{background:var(–navy);color:var(–gold);}
 
 /* リセットボタン */
-.reset-btn{width:100%;padding:11px;background:transparent;border:1px solid rgba(139,32,48,.3);color:rgba(139,32,48,.6);font-size:12px;letter-spacing:1px;cursor:pointer;border-radius:4px;margin-top:8px;}
-.reset-btn:hover{background:rgba(139,32,48,.06);}
+.reset-btn{width:100%;padding:11px;background:transparent;border:1px solid rgba(13,42,94,.3);color:rgba(13,42,94,.6);font-size:12px;letter-spacing:1px;cursor:pointer;border-radius:4px;margin-top:8px;}
+.reset-btn:hover{background:rgba(13,42,94,.06);}
 
 /* ===== SCANNER ===== */
 .scw{padding:0;}
@@ -107,9 +107,9 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
 .sucw{padding:32px 24px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;}
 .sucf{position:relative;width:128px;height:128px;margin:0 auto 22px;}
 .sucf canvas{width:128px!important;height:128px!important;border-radius:10px;}
-.r1,.r2{position:absolute;border:2.5px solid rgba(139,32,48,.35);border-radius:50%;transform:rotate(-14deg);animation:ri .5s ease both;}
+.r1,.r2{position:absolute;border:2.5px solid rgba(13,42,94,.35);border-radius:50%;transform:rotate(-14deg);animation:ri .5s ease both;}
 .r1{inset:-10px;}
-.r2{inset:-17px;border-width:1.5px;border-color:rgba(139,32,48,.18);animation-delay:.08s;}
+.r2{inset:-17px;border-width:1.5px;border-color:rgba(13,42,94,.18);animation-delay:.08s;}
 @keyframes ri{from{opacity:0;transform:rotate(-14deg) scale(1.45);}to{opacity:1;transform:rotate(-14deg) scale(1);}}
 .suct{font-family:‘Playfair Display’,serif;font-size:22px;color:var(–navy);margin-bottom:6px;}
 .sucs{font-size:13px;color:var(–muted);line-height:1.7;margin-bottom:26px;white-space:pre-line;}
@@ -118,7 +118,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
 .popup-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,.88);z-index:200;align-items:center;justify-content:center;padding:20px;}
 .popup-overlay.open{display:flex;}
 .popup-box{background:var(–cream);border-radius:16px;padding:28px 24px 24px;width:100%;max-width:360px;text-align:center;position:relative;overflow:hidden;}
-.popup-box::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(200,168,75,.04) 8px,rgba(200,168,75,.04) 16px);}
+.popup-box::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(74,158,221,.06) 8px,rgba(74,158,221,.06) 16px);}
 .popup-inner{position:relative;z-index:1;}
 .popup-chara{font-size:80px;margin-bottom:12px;display:block;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;}
 @keyframes popIn{from{opacity:0;transform:scale(.3) rotate(-10deg);}to{opacity:1;transform:scale(1) rotate(0deg);}}
@@ -130,7 +130,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
 /* ===== CONFIRM POPUP ===== */
 .confirm-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,.8);z-index:300;align-items:center;justify-content:center;padding:24px;}
 .confirm-overlay.open{display:flex;}
-.confirm-box{background:white;border-radius:12px;padding:24px;width:100%;max-width:300px;text-align:center;}
+.confirm-box{background:#f0f7ff;border-radius:12px;padding:24px;width:100%;max-width:300px;text-align:center;}
 .confirm-title{font-size:16px;font-weight:500;color:var(–navy);margin-bottom:8px;}
 .confirm-msg{font-size:13px;color:var(–muted);line-height:1.6;margin-bottom:20px;}
 .confirm-btns{display:flex;gap:10px;}
@@ -241,7 +241,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
         <div class="pbl">PASSPORT HOLDER</div>
         <div style="display:flex;align-items:center;gap:6px;">
           <div class="pbn" id="holder-name-display">応援者</div>
-          <button onclick="editHolderName()" style="background:transparent;border:1px solid rgba(200,168,75,.4);color:var(--gold);border-radius:4px;padding:2px 7px;font-size:10px;cursor:pointer;letter-spacing:1px;">編集</button>
+          <button onclick="editHolderName()" style="background:transparent;border:1px solid rgba(74,158,221,.6);color:var(--gold);border-radius:4px;padding:2px 7px;font-size:10px;cursor:pointer;letter-spacing:1px;">編集</button>
         </div>
         <input id="holder-name-input" type="text" placeholder="名前を入力"
           style="display:none;margin-top:4px;background:transparent;border:none;border-bottom:1.5px solid var(--gold);color:var(--gold);font-family:'Playfair Display',serif;font-size:17px;outline:none;width:130px;"
@@ -259,7 +259,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
     <button class="scbtn" onclick="showScanner()" style="margin-bottom:8px;">📷 QRコードをスキャン</button>
     <!-- コンプリートキャラ表示エリア -->
     <div id="complete-chara-area" style="display:none;text-align:center;padding:20px 0 8px;">
-      <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);letter-spacing:4px;margin-bottom:6px;text-shadow:0 2px 8px rgba(200,168,75,.3);">▸ COMPLETE! ◂</div>
+      <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);letter-spacing:4px;margin-bottom:6px;text-shadow:0 2px 8px rgba(74,158,221,.35);">▸ COMPLETE! ◂</div>
       <div style="font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:16px;">全メンバーとのコミュニケーション達成！</div>
       <div id="passport-chara-icon" style="display:block;margin-bottom:8px;animation:popIn .6s ease both;"></div>
       <div id="passport-chara-name" style="font-size:13px;color:var(--navy);font-weight:500;margin-bottom:4px;"></div>
@@ -277,7 +277,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
       <div class="scanner-modal-box">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
           <div>
-            <div style="font-size:9px;letter-spacing:2px;color:rgba(200,168,75,.5);">SCANNING NOW</div>
+            <div style="font-size:9px;letter-spacing:2px;color:rgba(74,158,221,.7);">SCANNING NOW</div>
             <div style="font-family:'Playfair Display',serif;color:var(--gold);font-size:16px;margin-top:2px;">メンバーのQRをスキャン</div>
           </div>
           <div style="color:var(--gold);font-size:22px;">📷</div>
@@ -291,7 +291,7 @@ select.ns{width:100%;padding:11px 13px;border:none;border-bottom:1.5px solid rgb
             <button class="sab" onclick="demoStamp()">スタンプを押す</button>
           </div>
         </div>
-        <button class="gb" style="color:rgba(200,168,75,.6);margin-top:4px;" onclick="closeScanner()">← キャンセル</button>
+        <button class="gb" style="color:rgba(74,158,221,.8);margin-top:4px;" onclick="closeScanner()">← キャンセル</button>
       </div>
     </div>
   </div>
